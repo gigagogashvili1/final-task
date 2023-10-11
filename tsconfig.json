@@ -35,6 +35,12 @@
       ],
       "@app/common-lib/*": [
         "libs/common-lib/src/*"
+      ],
+      "@app/users-lib": [
+        "libs/users-lib/src"
+      ],
+      "@app/users-lib/*": [
+        "libs/users-lib/src/*"
       ]
     }
   }

@@ -20,6 +20,8 @@
     "@app/auth-lib/(.*)": "<rootDir>/../libs/auth-lib/src/$1",
     "@app/auth-lib": "<rootDir>/../libs/auth-lib/src",
     "@app/common-lib/(.*)": "<rootDir>/../libs/common-lib/src/$1",
-    "@app/common-lib": "<rootDir>/../libs/common-lib/src"
+    "@app/common-lib": "<rootDir>/../libs/common-lib/src",
+    "@app/users-lib/(.*)": "<rootDir>/../libs/users-lib/src/$1",
+    "@app/users-lib": "<rootDir>/../libs/users-lib/src"
   }
 }
