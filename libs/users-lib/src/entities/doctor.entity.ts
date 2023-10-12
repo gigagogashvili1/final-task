@@ -20,12 +20,12 @@ export class Doctor extends BaseEntity {
   age: number;
 
   @Column({ type: 'varchar', nullable: false })
-  direction: string;
+  speciality: string;
 
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: false, unique: true })
   email: string;
 
   @Column({ type: 'enum', enum: Gender, nullable: false })

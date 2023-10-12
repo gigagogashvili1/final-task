@@ -1,9 +1,9 @@
 export abstract class IGenericRepository<T> {
-  abstract getAll(): Promise<T[]>;
+  abstract findAll(): Promise<T[]>;
 
-  abstract get(id: string): Promise<T>;
+  abstract findOneById(id: number): Promise<T>;
 
   abstract create(item: T): Promise<T>;
 
-  abstract update(id: string, item: T);
+  abstract update(id: number, item: T): Promise<T>;
 }

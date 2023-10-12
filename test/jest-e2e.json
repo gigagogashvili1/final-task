@@ -22,6 +22,10 @@
     "@app/common-lib/(.*)": "<rootDir>/../libs/common-lib/src/$1",
     "@app/common-lib": "<rootDir>/../libs/common-lib/src",
     "@app/users-lib/(.*)": "<rootDir>/../libs/users-lib/src/$1",
-    "@app/users-lib": "<rootDir>/../libs/users-lib/src"
+    "@app/users-lib": "<rootDir>/../libs/users-lib/src",
+    "@app/crypto-lib/(.*)": "<rootDir>/../libs/crypto-lib/src/$1",
+    "@app/crypto-lib": "<rootDir>/../libs/crypto-lib/src",
+    "@app/notifications-lib/(.*)": "<rootDir>/../libs/notifications-lib/src/$1",
+    "@app/notifications-lib": "<rootDir>/../libs/notifications-lib/src"
   }
 }

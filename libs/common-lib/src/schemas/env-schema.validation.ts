@@ -8,4 +8,6 @@ export const EnvJoiSchema = Joi.object({
   DATABASE_PASSWORD: Joi.string().required(),
   DATABASE_DATABASE: Joi.string().required(),
   APPLICATION_PORT: Joi.number().required().default(3000),
+  EMAIL: Joi.string().required(),
+  PASSWORD: Joi.string().required(),
 });

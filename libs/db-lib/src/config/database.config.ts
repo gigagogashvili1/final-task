@@ -1,3 +1,4 @@
+import { Doctor, Patient } from '@app/users-lib/entities';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
@@ -11,7 +12,7 @@ export const getDatabaseConfig = async (
     username: configService.get<string>('DATABASE_USERNAME'),
     password: configService.get<string>('DATABASE_PASSWORD'),
     database: configService.get<string>('DATABASE_DATABASE'),
-    entities: [],
+    entities: [Patient, Doctor],
     synchronize: true,
   };
 };

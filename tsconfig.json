@@ -41,6 +41,18 @@
       ],
       "@app/users-lib/*": [
         "libs/users-lib/src/*"
+      ],
+      "@app/crypto-lib": [
+        "libs/crypto-lib/src"
+      ],
+      "@app/crypto-lib/*": [
+        "libs/crypto-lib/src/*"
+      ],
+      "@app/notifications-lib": [
+        "libs/notifications-lib/src"
+      ],
+      "@app/notifications-lib/*": [
+        "libs/notifications-lib/src/*"
       ]
     }
   }

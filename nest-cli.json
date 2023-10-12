@@ -42,6 +42,24 @@
       "compilerOptions": {
         "tsConfigPath": "libs/users-lib/tsconfig.lib.json"
       }
+    },
+    "crypto-lib": {
+      "type": "library",
+      "root": "libs/crypto-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/crypto-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/crypto-lib/tsconfig.lib.json"
+      }
+    },
+    "notifications-lib": {
+      "type": "library",
+      "root": "libs/notifications-lib",
+      "entryFile": "index",
+      "sourceRoot": "libs/notifications-lib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/notifications-lib/tsconfig.lib.json"
+      }
     }
   }
 }

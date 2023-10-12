@@ -16,14 +16,14 @@ export class Patient extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: false, unique: true })
   email: string;
 
   @Column({ type: 'enum', enum: Gender, nullable: false })
   gender: Gender;
 
   @Column({ type: 'varchar', nullable: false })
-  direction: string;
+  doctorSpeciality: string;
 
   @Column({ type: 'varchar', name: 'cause_of_visit', nullable: false })
   causeOfVisit: string;
