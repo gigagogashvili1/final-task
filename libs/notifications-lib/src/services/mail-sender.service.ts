@@ -1,27 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
+
+import * as AWS from 'aws-sdk';
+import { Content, SendEmailRequest } from 'aws-sdk/clients/ses';
+
 @Injectable()
 export class MailSenderService {
-  private transporter: nodemailer.Transporter;
+  private SES: AWS.SES;
 
   public constructor(private readonly configService: ConfigService) {
-    this.transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: this.configService.get('EMAIL'),
-        pass: this.configService.get('PASSWORD'),
-      },
+    this.SES = new AWS.SES({
+      accessKeyId: this.configService.get<string>('AWS_ACCESS_KEY'),
+      secretAccessKey: this.configService.get<string>('AWS_SECRET_ACCESS_KEY'),
+      region: this.configService.get<string>('AWS_REGION'),
     });
   }
 
-  public async sendEmail(to: string, subject: string, text: string): Promise<any> {
-    const mailOptions: nodemailer.SendMailOptions = {
-      from: this.configService.get('EMAIL'),
-      to,
-      subject,
-      text,
+  public async sendEmail(to: string, subject: string, text: string): Promise<void> {
+    const subjectContent: Content = {
+      Data: subject,
     };
-    await this.transporter.sendMail(mailOptions);
+
+    const textContent: Content = {
+      Data: text,
+    };
+
+    const reqParams: SendEmailRequest = {
+      Source: this.configService.get<string>('AWS_EMAIL_ADDRESS'),
+      Destination: {
+        ToAddresses: [to],
+      },
+      Message: { Subject: subjectContent, Body: { Text: textContent } },
+    };
+
+    try {
+      await this.SES.sendEmail(reqParams).promise();
+    } catch (err) {
+      throw err;
+    }
   }
 }

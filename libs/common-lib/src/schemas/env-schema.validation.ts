@@ -10,4 +10,8 @@ export const EnvJoiSchema = Joi.object({
   APPLICATION_PORT: Joi.number().required().default(3000),
   EMAIL: Joi.string().required(),
   PASSWORD: Joi.string().required(),
+  AWS_ACCESS_KEY: Joi.string().required(),
+  AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+  AWS_REGION: Joi.string().required(),
+  AWS_EMAIL_ADDRESS: Joi.string().required(),
 });
