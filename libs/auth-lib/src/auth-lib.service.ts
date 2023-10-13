@@ -15,21 +15,30 @@ export class AuthLibService {
     private readonly patientRepository: PatientRepository,
   ) {}
   //Doctor
-  public async signUpDoctor(createDoctorDto: CreateDoctorDto) {
-    const { email, password } = createDoctorDto;
+
+  public async signUp(userType: 'doctor' | 'patient', dto: CreateDoctorDto | CreatePatientDto) {
+    const { email, password } = dto;
     try {
-      const doctorExists = await this.doctorsRepository.findOneByEmail(email);
-
-      if (doctorExists) throw new ConflictException('Doctor with given email already exists!');
-
       const hashedPassword = await this.cryptoLibService.hashPassword(password, 10);
-      await this.mailSenderService.sendEmail(email, 'Signup Notification', 'You have succesfully signed up');
+      if (userType === 'doctor') {
+        const userExists = await this.doctorsRepository.findOneByEmail(email);
+        if (userExists) throw new ConflictException('Doctor with given email already exists!');
 
-      await this.doctorRepository.create({
-        ...createDoctorDto,
-        password: hashedPassword,
-      });
-      return 'Doctor has registred succesfully!';
+        await this.doctorRepository.create({
+          ...(dto as CreateDoctorDto),
+          password: hashedPassword,
+        });
+      } else {
+        const patientExists = await this.patientRepository.findOneByEmail(email);
+        if (patientExists) throw new ConflictException('Patient with given email already exists!');
+
+        await this.patientRepository.create({
+          ...(dto as CreatePatientDto),
+          password: hashedPassword,
+        });
+      }
+      await this.mailSenderService.sendEmail(email, 'Signup Notification', 'You have succesfully signed up');
+      return `${userType} has registred succesfully!`;
     } catch (err) {
       throw err;
     }
@@ -38,26 +47,6 @@ export class AuthLibService {
   public async signInDoctor() {}
 
   //Patient
-
-  public async signUpPatient(createPatientDto: CreatePatientDto) {
-    const { email, password } = createPatientDto;
-    try {
-      const patientExists = await this.patientRepository.findOneByEmail(email);
-
-      if (patientExists) throw new ConflictException('Patient with given email already exists!');
-
-      const hashedPassword = await this.cryptoLibService.hashPassword(password, 10);
-      await this.mailSenderService.sendEmail(email, 'Signup Notification', 'You have succesfully signed up');
-
-      await this.patientRepository.create({
-        ...createPatientDto,
-        password: hashedPassword,
-      });
-      return 'Patient has registered succesfully!';
-    } catch (err) {
-      throw err;
-    }
-  }
 
   public async signInPatient() {}
 }

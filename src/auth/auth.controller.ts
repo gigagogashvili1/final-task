@@ -11,7 +11,8 @@ export class AuthController {
   @HttpCode(201)
   @Post('doctor/sign-up')
   public async signUpDoctor(@Body() createDoctorDto: CreateDoctorDto) {
-    return await this.authLibService.signUpDoctor(createDoctorDto);
+    return await this.authLibService.signUp('doctor', createDoctorDto);
+    // return await this.authLibService.signUpDoctor(createDoctorDto);
   }
 
   public async signInDoctor() {}
@@ -20,7 +21,8 @@ export class AuthController {
   @HttpCode(201)
   @Post('patient/sign-up')
   public async signUpPatient(@Body() createPatientDto: CreatePatientDto) {
-    return await this.authLibService.signUpPatient(createPatientDto);
+    return await this.authLibService.signUp('patient', createPatientDto);
+    // return await this.authLibService.signUpPatient(createPatientDto);
   }
 
   public async signInPatient() {}
