@@ -1,29 +1,32 @@
 import { AuthLibService } from '@app/auth-lib';
-import { CreateDoctorDto, CreatePatientDto } from '@app/auth-lib/dtos';
-import { Body, Controller, HttpCode, InternalServerErrorException, Post } from '@nestjs/common';
+import { CreateUserDto } from '@app/auth-lib/dtos/create-user.dto';
+import { CreateUserValidationPipe } from '@app/auth-lib/pipes/create-user-validation.pipe';
+import { AccessTokenGuard, LocalGuard } from '@app/common-lib/guards';
+import { RequestWithUser } from '@app/common-lib/interfaces';
+import { User } from '@app/users-lib/entities';
+import { Body, Controller, Get, HttpCode, Post, Req, UseGuards, UsePipes } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
   public constructor(private readonly authLibService: AuthLibService) {}
 
-  // Doctors
-
   @HttpCode(201)
-  @Post('doctor/sign-up')
-  public async signUpDoctor(@Body() createDoctorDto: CreateDoctorDto) {
-    return await this.authLibService.signUp('doctor', createDoctorDto);
-    // return await this.authLibService.signUpDoctor(createDoctorDto);
+  @UsePipes(new CreateUserValidationPipe())
+  @Post('sign-up')
+  public async signUp(@Body() createUserDto: CreateUserDto) {
+    return await this.authLibService.signUp(createUserDto);
   }
 
-  public async signInDoctor() {}
-
-  //   Patients
-  @HttpCode(201)
-  @Post('patient/sign-up')
-  public async signUpPatient(@Body() createPatientDto: CreatePatientDto) {
-    return await this.authLibService.signUp('patient', createPatientDto);
-    // return await this.authLibService.signUpPatient(createPatientDto);
+  @UseGuards(LocalGuard)
+  @HttpCode(200)
+  @Post('sign-in')
+  public async signIn(@Req() request: RequestWithUser<User>) {
+    return await this.authLibService.signin(request);
   }
 
-  public async signInPatient() {}
+  @UseGuards(AccessTokenGuard)
+  @Get('/me')
+  public async getCurrentUser(@Req() request: RequestWithUser<User>) {
+    return request.user;
+  }
 }

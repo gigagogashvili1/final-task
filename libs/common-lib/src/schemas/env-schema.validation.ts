@@ -14,4 +14,8 @@ export const EnvJoiSchema = Joi.object({
   AWS_SECRET_ACCESS_KEY: Joi.string().required(),
   AWS_REGION: Joi.string().required(),
   AWS_EMAIL_ADDRESS: Joi.string().required(),
+  ACCESS_TOKEN_EXPIRES_IN: Joi.string().required(),
+  REFRESH_TOKEN_EXPIRES_IN: Joi.string().required(),
+  ACCESS_TOKEN_SECRET: Joi.string().required(),
+  REFRESH_TOKEN_SECRET: Joi.string().required(),
 });

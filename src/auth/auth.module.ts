@@ -4,6 +4,7 @@ import { AuthLibModule } from '@app/auth-lib';
 
 @Module({
   imports: [AuthLibModule],
+  providers: [],
   controllers: [AuthController],
 })
 export class AuthModule {}

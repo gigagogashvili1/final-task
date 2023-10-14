@@ -13,9 +13,6 @@ export class DoctorsRepository extends IGenericRepository<Doctor> {
   public findOneById(id: number): Promise<Doctor> {
     return this.doctorsRepository.findOne({ where: { id } });
   }
-  public findOneByEmail(email: string): Promise<Doctor> {
-    return this.doctorsRepository.findOne({ where: { email } });
-  }
   public create(item: Doctor): Promise<Doctor> {
     const doctor = this.doctorsRepository.create(item);
     return this.doctorsRepository.save(doctor);

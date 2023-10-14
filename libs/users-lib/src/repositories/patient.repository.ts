@@ -15,10 +15,6 @@ export class PatientRepository extends IGenericRepository<Patient> {
     return this.patientRepository.findOne({ where: { id } });
   }
 
-  public findOneByEmail(email: string): Promise<Patient> {
-    return this.patientRepository.findOne({ where: { email } });
-  }
-
   public create(item: Patient): Promise<Patient> {
     const patient = this.patientRepository.create(item);
     return this.patientRepository.save(patient);

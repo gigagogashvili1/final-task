@@ -1,9 +1,11 @@
-import { BaseEntity } from '@app/common-lib/entities';
-import { Column, Entity } from 'typeorm';
-import { Gender } from '../enums';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity('doctors')
-export class Doctor extends BaseEntity {
+export class Doctor {
+  @PrimaryGeneratedColumn()
+  id?: number;
+
   @Column({ type: 'smallint', name: 'price_per_hour', nullable: false })
   pricePerHour: number;
 
@@ -11,23 +13,8 @@ export class Doctor extends BaseEntity {
   experience: number;
 
   @Column({ type: 'varchar', nullable: false })
-  country: string;
-
-  @Column({ type: 'varchar', nullable: false })
-  city: string;
-
-  @Column({ type: 'int', nullable: false })
-  age: number;
-
-  @Column({ type: 'varchar', nullable: false })
   speciality: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  password: string;
-
-  @Column({ type: 'varchar', nullable: false, unique: true })
-  email: string;
-
-  @Column({ type: 'enum', enum: Gender, nullable: false })
-  gender: Gender;
+  @OneToOne((type) => User, (user) => user.doctor)
+  user?: User;
 }
