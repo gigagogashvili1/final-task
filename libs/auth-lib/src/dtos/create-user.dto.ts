@@ -37,6 +37,16 @@ export class CreateUserDto {
 
   @ValidateIf((o) => o.role === UserRole.PATIENT)
   @IsNotEmpty()
+  @IsNumber()
+  doctorExperience: number;
+
+  @ValidateIf((o) => o.role === UserRole.PATIENT)
+  @IsNotEmpty()
+  @IsNumber()
+  doctorPricePerHour: number;
+
+  @ValidateIf((o) => o.role === UserRole.PATIENT)
+  @IsNotEmpty()
   @IsString()
   causeOfVisit: string;
 

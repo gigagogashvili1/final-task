@@ -17,8 +17,8 @@ export class DoctorsRepository extends IGenericRepository<Doctor> {
     const doctor = this.doctorsRepository.create(item);
     return this.doctorsRepository.save(doctor);
   }
-  public async update(id: number, item: Doctor) {
-    const doctor = await this.doctorsRepository.preload({ id, ...item });
+  public async update(id: number, item: Partial<Doctor>) {
+    const doctor = await this.doctorsRepository.preload({ id: Number(id), ...item });
     return this.doctorsRepository.save(doctor);
   }
 }

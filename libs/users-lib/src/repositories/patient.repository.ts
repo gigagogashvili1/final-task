@@ -1,7 +1,7 @@
 import { IGenericRepository } from '@app/common-lib/repositories';
-import { Patient } from '../entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Patient } from '../entities';
 
 export class PatientRepository extends IGenericRepository<Patient> {
   public constructor(@InjectRepository(Patient) private readonly patientRepository: Repository<Patient>) {
@@ -19,8 +19,8 @@ export class PatientRepository extends IGenericRepository<Patient> {
     const patient = this.patientRepository.create(item);
     return this.patientRepository.save(patient);
   }
-  public async update(id: number, item: Patient) {
-    const patient = await this.patientRepository.preload({ id, ...item });
-    return this.patientRepository.save(patient);
+  public async update(id: number, item: Partial<Patient>) {
+    const doctor = await this.patientRepository.preload({ id: Number(id), ...item });
+    return this.patientRepository.save(doctor);
   }
 }

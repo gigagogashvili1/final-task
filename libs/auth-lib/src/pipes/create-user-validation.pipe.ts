@@ -12,6 +12,8 @@ export class CreateUserValidationPipe implements PipeTransform {
     if (createUserDto.role === UserRole.DOCTOR) {
       delete createUserDto.causeOfVisit;
       delete createUserDto.doctorSpeciality;
+      delete createUserDto.doctorPricePerHour;
+      delete createUserDto.doctorExperience;
     }
 
     if (createUserDto.role === UserRole.PATIENT) {

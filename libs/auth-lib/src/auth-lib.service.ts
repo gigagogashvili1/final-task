@@ -33,6 +33,8 @@ export class AuthLibService {
       experience,
       pricePerHour,
       speciality,
+      doctorExperience,
+      doctorPricePerHour,
     } = createUserDto;
 
     try {
@@ -46,7 +48,12 @@ export class AuthLibService {
       const doctorOrPatient =
         role === UserRole.DOCTOR
           ? await this.doctorRepository.create({ experience, pricePerHour, speciality })
-          : await this.patientRepository.create({ causeOfVisit, doctorSpeciality });
+          : await this.patientRepository.create({
+              causeOfVisit,
+              doctorSpeciality,
+              doctorExperience,
+              doctorPricePerHour,
+            });
 
       const newUser = await this.userRepository.create({
         email,

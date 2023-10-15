@@ -13,7 +13,7 @@ export class UsersRepository extends IGenericRepository<User> {
   }
 
   public findOneById(id: number): Promise<User> {
-    return this.userRepository.findOne({ where: { id } });
+    return this.userRepository.findOne({ where: { id }, relations: ['doctor', 'patient'] });
   }
 
   public findOneByEmail(email: string): Promise<User> {
@@ -24,7 +24,7 @@ export class UsersRepository extends IGenericRepository<User> {
     const patient = this.userRepository.create(item);
     return this.userRepository.save(patient);
   }
-  public async update(id: number, item: User) {
+  public async update(id: number, item: Partial<User>) {
     const patient = await this.userRepository.preload({ id, ...item });
     return this.userRepository.save(patient);
   }

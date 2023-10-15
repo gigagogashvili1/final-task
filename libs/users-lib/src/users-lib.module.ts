@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { UsersLibService } from './users-lib.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Doctor, Patient, User } from './entities';
 import { DoctorsRepository, PatientRepository, UsersRepository } from './repositories';
+import { DoctorsService, PatientsService } from './services';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Doctor, Patient, User])],
-  providers: [UsersLibService, DoctorsRepository, PatientRepository, UsersRepository],
-  exports: [UsersLibService, DoctorsRepository, PatientRepository, UsersRepository],
+  providers: [DoctorsService, PatientsService, DoctorsRepository, PatientRepository, UsersRepository],
+  exports: [DoctorsService, PatientsService, DoctorsRepository, PatientRepository, UsersRepository],
 })
 export class UsersLibModule {}
