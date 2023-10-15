@@ -17,7 +17,7 @@ export class UsersRepository extends IGenericRepository<User> {
   }
 
   public findOneByEmail(email: string): Promise<User> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({ where: { email }, relations: ['doctor', 'patient'] });
   }
 
   public create(item: User): Promise<User> {

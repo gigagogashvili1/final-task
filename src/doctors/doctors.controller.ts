@@ -6,6 +6,7 @@ import { User } from '@app/users-lib/entities';
 import { UserRole } from '@app/users-lib/enums';
 import { DoctorsService } from '@app/users-lib/services/doctors.service';
 import { Body, Controller, Param, Put, Req, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('doctors')
 export class DoctorsController {
@@ -14,11 +15,12 @@ export class DoctorsController {
   @Roles(UserRole.DOCTOR)
   @UseGuards(AccessTokenGuard, RoleGuard)
   @Put('update/:id')
-  public async updatedoctor(
+  @Throttle({ default: { limit: 2, ttl: 60000 } })
+  public updatedoctor(
     @Param('id') id: number,
     @Body() updateDoctorDto: UpdateDoctorDto,
     @Req() request: RequestWithUser<User>,
   ) {
-    return await this.doctorsService.updateDoctor(id, updateDoctorDto, request.user);
+    return this.doctorsService.updateDoctor(id, updateDoctorDto, request.user);
   }
 }

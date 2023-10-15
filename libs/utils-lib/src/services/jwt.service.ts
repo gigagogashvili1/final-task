@@ -18,7 +18,7 @@ export class JwtService {
   private ACCESS_TOKEN_SECRET: string;
   private REFRESH_TOKEN_SECRET: string;
 
-  constructor(
+  public constructor(
     private readonly jwtService: Jwt,
     private readonly configService: ConfigService,
   ) {
@@ -28,7 +28,7 @@ export class JwtService {
     this.REFRESH_TOKEN_SECRET = configService.get<string>(REFRESH_TOKEN_SECRET);
   }
 
-  async sign(payload: UserJwtPayload, type: TokenType = 'access_token') {
+  public async sign(payload: UserJwtPayload, type: TokenType = 'access_token') {
     try {
       let token: string;
       switch (type) {

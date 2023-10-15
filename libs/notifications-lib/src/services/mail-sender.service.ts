@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
 import * as AWS from 'aws-sdk';
 import { Content, SendEmailRequest } from 'aws-sdk/clients/ses';
+import { IMailSenderService } from '../interfaces';
 
 @Injectable()
-export class MailSenderService {
+export class MailSenderService implements IMailSenderService {
   private SES: AWS.SES;
 
   public constructor(private readonly configService: ConfigService) {

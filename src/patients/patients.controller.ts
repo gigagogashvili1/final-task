@@ -6,6 +6,7 @@ import { User } from '@app/users-lib/entities';
 import { UserRole } from '@app/users-lib/enums';
 import { PatientsService } from '@app/users-lib/services/patients.service';
 import { Body, Controller, Get, Param, Put, Req, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('patients')
 export class PatientsController {
@@ -14,18 +15,19 @@ export class PatientsController {
   @Roles(UserRole.PATIENT)
   @UseGuards(AccessTokenGuard, RoleGuard)
   @Put('update/:id')
-  public async updatePatient(
+  @Throttle({ default: { limit: 2, ttl: 60000 } })
+  public updatePatient(
     @Param('id') id: number,
     @Body() updatePatientDto: UpdatePatientDto,
     @Req() request: RequestWithUser<User>,
   ) {
-    return await this.patientsService.updatePatient(id, updatePatientDto, request.user);
+    return this.patientsService.updatePatient(id, updatePatientDto, request.user);
   }
 
   @Roles(UserRole.PATIENT)
   @UseGuards(AccessTokenGuard, RoleGuard)
   @Get('suggested-doctors')
-  public async onlyForPatient(@Req() request: RequestWithUser<User>) {
-    return await this.patientsService.getSuggestedDoctors(request.user);
+  public onlyForPatient(@Req() request: RequestWithUser<User>) {
+    return this.patientsService.getSuggestedDoctors(request.user);
   }
 }
