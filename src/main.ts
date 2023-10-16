@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from '@app/common-lib/exception-filters';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
@@ -19,6 +21,25 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  const config = new DocumentBuilder()
+    .setTitle('Medicine')
+    .setDescription('Medicine Api, where u can create patients, doctors and so on')
+    .setVersion('1.0')
+    .addTag('medicine')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+
+  document['components']['securitySchemes'] = {
+    bearerAuth: {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    },
+  };
+  SwaggerModule.setup('/swagger', app, document);
+
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(PORT);
 }
