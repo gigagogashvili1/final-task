@@ -1,6 +1,6 @@
 import { IGenericRepository } from '@app/common-lib/repositories';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { Patient } from '../entities';
 
 export class PatientRepository extends IGenericRepository<Patient> {
@@ -8,8 +8,8 @@ export class PatientRepository extends IGenericRepository<Patient> {
     super();
   }
 
-  public findAll(): Promise<Patient[]> {
-    return this.patientRepository.find();
+  public findAll(options?: FindManyOptions<Patient>): Promise<Patient[]> {
+    return this.patientRepository.find(options);
   }
   public findOneById(id: number): Promise<Patient> {
     return this.patientRepository.findOne({ where: { id } });

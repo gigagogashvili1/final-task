@@ -1,5 +1,7 @@
+import { FindManyOptions } from 'typeorm';
+
 export abstract class IGenericRepository<T> {
-  abstract findAll(): Promise<T[]>;
+  abstract findAll(options?: FindManyOptions<T>): Promise<T[]>;
 
   abstract findOneById(id: number): Promise<T>;
 

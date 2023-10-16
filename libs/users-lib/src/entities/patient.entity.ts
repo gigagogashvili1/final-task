@@ -1,5 +1,6 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
+import { HiddenDoctor } from './hidde-doctor.entity';
 
 @Entity('patients')
 export class Patient {
@@ -20,4 +21,8 @@ export class Patient {
 
   @OneToOne((type) => User, (user) => user.patient)
   user?: User;
+
+  @OneToMany(() => HiddenDoctor, (hiddenDoctor) => hiddenDoctor.patient)
+  @JoinColumn()
+  hiddenDoctors?: HiddenDoctor[];
 }

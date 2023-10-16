@@ -1,4 +1,5 @@
 import { Doctor, Patient, User } from '@app/users-lib/entities';
+import { HiddenDoctor } from '@app/users-lib/entities/hidde-doctor.entity';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
@@ -10,7 +11,7 @@ export const getDatabaseConfig = async (configService: ConfigService): Promise<T
     username: configService.get<string>('DATABASE_USERNAME'),
     password: configService.get<string>('DATABASE_PASSWORD'),
     database: configService.get<string>('DATABASE_DATABASE'),
-    entities: [Patient, Doctor, User],
+    entities: [Patient, Doctor, User, HiddenDoctor],
     synchronize: true,
   };
 };

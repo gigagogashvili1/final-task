@@ -5,7 +5,7 @@ import { UpdatePatientDto } from '@app/users-lib/dtos';
 import { User } from '@app/users-lib/entities';
 import { UserRole } from '@app/users-lib/enums';
 import { PatientsService } from '@app/users-lib/services/patients.service';
-import { Body, Controller, Get, Param, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 
 @Controller('patients')
@@ -29,5 +29,19 @@ export class PatientsController {
   @Get('suggested-doctors')
   public onlyForPatient(@Req() request: RequestWithUser<User>) {
     return this.patientsService.getSuggestedDoctors(request.user);
+  }
+
+  @Roles(UserRole.PATIENT)
+  @UseGuards(AccessTokenGuard, RoleGuard)
+  @Post('hide-doctor/:id')
+  public hideDoctor(@Param('id') id: number, @Req() request: RequestWithUser<User>) {
+    return this.patientsService.hideDoctor(id, request.user);
+  }
+
+  @Roles(UserRole.PATIENT)
+  @UseGuards(AccessTokenGuard, RoleGuard)
+  @Post('unhide-doctor/:id')
+  public unhideDoctor(@Param('id') id: number, @Req() request: RequestWithUser<User>) {
+    return this.patientsService.unhideDoctor(id, request.user);
   }
 }

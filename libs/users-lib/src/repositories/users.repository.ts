@@ -1,15 +1,15 @@
 import { IGenericRepository } from '@app/common-lib/repositories';
 import { User } from '../entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 
 export class UsersRepository extends IGenericRepository<User> {
   public constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
     super();
   }
 
-  public findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  public findAll(options?: FindManyOptions<User>): Promise<User[]> {
+    return this.userRepository.find(options);
   }
 
   public findOneById(id: number): Promise<User> {
@@ -27,5 +27,8 @@ export class UsersRepository extends IGenericRepository<User> {
   public async update(id: number, item: Partial<User>) {
     const patient = await this.userRepository.preload({ id, ...item });
     return this.userRepository.save(patient);
+  }
+  public createQueryBuilder(allias: string) {
+    return this.userRepository.createQueryBuilder(allias);
   }
 }

@@ -1,5 +1,6 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
+import { HiddenDoctor } from './hidde-doctor.entity';
 
 @Entity('doctors')
 export class Doctor {
@@ -17,4 +18,7 @@ export class Doctor {
 
   @OneToOne((type) => User, (user) => user.doctor)
   user?: User;
+
+  @OneToMany(() => HiddenDoctor, (hiddenDoctor) => hiddenDoctor.doctor)
+  hiddenByPatients?: HiddenDoctor[];
 }
